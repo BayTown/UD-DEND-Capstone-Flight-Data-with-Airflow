@@ -1,0 +1,7 @@
+#Exclude __pycache__
+/dags/__pycache__
+/plugins/__pycache__
+/plugins/operators/__pycache__
+
+#Exclude misc
+temp.txt
