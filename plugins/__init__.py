@@ -6,5 +6,6 @@ import operators
 class FlightData(AirflowPlugin):
     name = "flightdata_plugin"
     operators = [
-        operators.CSVToPostgresOperator
+        operators.CSVToPostgresOperator,
+        operators.DownloadCSVOperator
     ]

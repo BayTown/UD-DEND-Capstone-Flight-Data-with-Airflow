@@ -1,3 +1,5 @@
+import logging
+
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.models.baseoperator import BaseOperator
 from airflow.utils.decorators import apply_defaults
@@ -8,7 +10,7 @@ class CSVToPostgresOperator(BaseOperator):
 
     copy_sql = """
         COPY {}
-        FROM 'curl "{}"'
+        FROM '{}'
         DELIMITER '{}'
         {};
     """
