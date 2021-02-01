@@ -51,5 +51,7 @@ CREATE TABLE staging_airports(
     latitude numeric(18,0),
     longitude numeric(18,0),
     country varchar(256),
-    altitude int4
+    altitude int4,
+    type varchar(256),
+    municipality varchar(256)
 );
