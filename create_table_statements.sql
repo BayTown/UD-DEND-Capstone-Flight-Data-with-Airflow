@@ -43,3 +43,13 @@ CREATE TABLE staging_aircraft_database(
     notes varchar(256),
     categoryDescription varchar(256)
 );
+
+CREATE TABLE staging_airports(
+    name varchar(256),
+    iata varchar(256),
+    icao varchar(256),
+    latitude numeric(18,0),
+    longitude numeric(18,0),
+    country varchar(256),
+    altitude int4
+);

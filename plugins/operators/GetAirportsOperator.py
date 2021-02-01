@@ -1,23 +1,23 @@
 import requests
 import os
 import logging
+from traffic.data import airports
+import pandas as pd
 
 from airflow.models.baseoperator import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
-class DownloadCSVOperator(BaseOperator):
+class GetAirportsOperator(BaseOperator):
     ui_color = '#03e8fc'
 
 
     @apply_defaults
     def __init__(self,
-                 csv_url, 
                  csv_file_name,
                  tmp_path,
                  *args, **kwargs):
 
-        super(DownloadCSVOperator, self).__init__(*args, **kwargs)
-        self.csv_url = csv_url
+        super(GetAirportsOperator, self).__init__(*args, **kwargs)
         self.csv_file_name = csv_file_name
         self.tmp_path = tmp_path
 
@@ -34,13 +34,13 @@ class DownloadCSVOperator(BaseOperator):
             None
         """
 
-        # Download CSV-file from URL
-        self.log.info('Download CSV-file {}'.format(self.csv_file_name))
-        req = requests.get(self.csv_url)
-        url_content = req.content
-
-        # Save CSV-file to temporary path
+        # Build path to csv
         csv_path = os.path.join(self.tmp_path, self.csv_file_name)
-        csv_file = open(csv_path, 'wb')
-        csv_file.write(url_content)
-        csv_file.close()
+        # Download CSV-file from URL and save it to tmp path
+        self.log.info('Get airport data from traffic api')
+        airports.download_airports()
+        airports.to_csv(csv_path)
+
+        # Load csv to pandas dataframe and save it without index column
+        df = pd.read_csv(csv_path, index_col=0)
+        df.to_csv(csv_path, index=False)

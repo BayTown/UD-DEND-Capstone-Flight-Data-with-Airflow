@@ -9,8 +9,10 @@ from airflow.operators.dummy import DummyOperator
 from airflow.providers.postgres.operators.postgres import Mapping, PostgresOperator
 from operators.CSVToPostgresOperator import CSVToPostgresOperator
 from operators.DownloadCSVOperator import DownloadCSVOperator
+from operators.GetAirportsOperator import GetAirportsOperator
 from airflow.operators.python import PythonOperator
 
+# Path to a temporary folder where the CSV files can be temporarily saved.
 temp_path = '/home/andi-ml/Documents/projects/UD-DEND-Capstone-Flight-Data-with-Airflow/tmp'
 
 dag = DAG(
@@ -74,6 +76,22 @@ stage_aircraft_database_task = CSVToPostgresOperator(
     additional_params='CSV HEADER'
 )
 
+get_airports_task = GetAirportsOperator(
+    task_id='get_airports',
+    dag=dag,
+    csv_file_name='airports.csv',
+    tmp_path=temp_path
+)
+
+stage_airports_task = CSVToPostgresOperator(
+    task_id='stage_airports',
+    dag=dag,
+    postgres_conn_id='postgres',
+    table='staging_airports',
+    path_to_csv=os.path.join(temp_path, 'airports.csv'),
+    delimiter=',',
+    additional_params='CSV HEADER'
+)
 
 
 end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
@@ -81,9 +99,12 @@ end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
 start_operator >> download_aircraft_types_task
 start_operator >> download_manufacturers_task
 start_operator >> download_aircraft_database_task
+start_operator >> get_airports_task
 download_aircraft_types_task >> stage_aircraft_types_task
 download_manufacturers_task >> stage_manufacturers_task
 download_aircraft_database_task >> stage_aircraft_database_task
+get_airports_task >> stage_airports_task
 stage_aircraft_types_task >> end_operator
 stage_manufacturers_task >> end_operator
 stage_aircraft_database_task >> end_operator
+stage_airports_task >> end_operator
