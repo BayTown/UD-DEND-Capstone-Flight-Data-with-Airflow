@@ -13,15 +13,14 @@ from airflow.operators.python import PythonOperator
 default_args = {
     'owner': 'ah',
     'depends_on_past': False,
-    'start_date': datetime(2018, 1,1, 0, 0, 0, 0),
+    'start_date': datetime(2018, 1, 1, 0, 0, 0, 0),
     'end_date': datetime(2021, 2, 8, 0, 0, 0, 0),
     'retries': 1,
-    'retry_delay': timedelta(seconds=5),
-    'schedule_interval': '@hourly',
+    'retry_delay': timedelta(seconds=5)
 }
 
 
-dag = DAG("aa_dag_staging_flights", default_args=default_args)
+dag = DAG("aa_dag_staging_flights", default_args=default_args, schedule_interval='@hourly')
 
 start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 

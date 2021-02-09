@@ -97,7 +97,7 @@ class APItoPostgresOperator(BaseOperator):
                 self.log.info('API request doesnt contain data - datetime:{}'.format(start_time))
 
         else:
-            self.log.info('API request problem - datetime:{} - response_code:{}'.format(start_time, data[0]))
+            self.log.info('API request problem - datetime:{} - response_code:{}'.format(start_time, str(response)))
 
 
         self.log.info('APItoPostgresOperator for {} completed - datetime: {}'.format(self.table, start_time))
