@@ -1,6 +1,5 @@
 import logging
 
-from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.models.baseoperator import BaseOperator
 from airflow.utils.decorators import apply_defaults
 from airflow.providers.postgres.hooks.postgres import PostgresHook

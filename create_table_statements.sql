@@ -55,3 +55,12 @@ CREATE TABLE staging_airports(
     type varchar(256),
     municipality varchar(256)
 );
+
+CREATE TABLE staging_flights(
+    icao24 varchar(256),
+    firstSeen integer,
+    estDepartureAirport varchar(256),
+    lastSeen integer,
+    estArrivalAirport varchar(256),
+    callsign varchar(256)
+);

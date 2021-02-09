@@ -8,5 +8,6 @@ class FlightData(AirflowPlugin):
     operators = [
         operators.CSVToPostgresOperator,
         operators.DownloadCSVOperator,
-        operators.GetAirportsOperator
+        operators.GetAirportsOperator,
+        operators.APItoPostgresOperator
     ]

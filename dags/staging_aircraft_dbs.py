@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import logging
 import os
 
@@ -15,10 +15,14 @@ from airflow.operators.python import PythonOperator
 # Path to a temporary folder where the CSV files can be temporarily saved.
 temp_path = '/home/andi-ml/Documents/projects/UD-DEND-Capstone-Flight-Data-with-Airflow/tmp'
 
-dag = DAG(
-    "aa_staging_aircraft_dbs",
-    start_date=datetime.datetime.utcnow()
-)
+default_args = {
+    'owner': 'ah',
+    'start_date': datetime.utcnow(),
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5)
+}
+
+dag = DAG("aa_staging_aircraft_dbs", default_args=default_args)
 
 start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 
