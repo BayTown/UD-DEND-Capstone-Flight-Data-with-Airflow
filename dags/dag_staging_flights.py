@@ -9,12 +9,22 @@ from airflow.providers.postgres.operators.postgres import Mapping, PostgresOpera
 from operators.APItoPostgresOperator import APItoPostgresOperator
 from airflow.operators.python import PythonOperator
 
+"""
+# Get flight data from OpenSky REST API
+This DAG (Directed Acyclic Graph) builds a data pipeline
+to get flight data from OpenSky REST API.
+
+"""
+
+
+
+
 
 default_args = {
     'owner': 'ah',
     'depends_on_past': False,
-    'start_date': datetime(2018, 1, 1, 0, 0, 0, 0),
-    'end_date': datetime(2021, 2, 8, 0, 0, 0, 0),
+    'start_date': datetime(2018, 6, 19, 16, 0, 0, 0),
+    'end_date': datetime(2021, 2, 10, 0, 0, 0, 0),
     'retries': 1,
     'retry_delay': timedelta(seconds=5)
 }

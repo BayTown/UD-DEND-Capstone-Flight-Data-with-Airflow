@@ -12,6 +12,13 @@ from operators.DownloadCSVOperator import DownloadCSVOperator
 from operators.GetAirportsOperator import GetAirportsOperator
 from airflow.operators.python import PythonOperator
 
+"""
+# Get aircraft and airport data from the OpenSky Network
+This DAG (Directed Acyclic Graph) builds a data pipeline
+to get aircraft and airport data from the OpenSky Network
+
+"""
+
 # Path to a temporary folder where the CSV files can be temporarily saved.
 temp_path = '/home/andi-ml/Documents/projects/UD-DEND-Capstone-Flight-Data-with-Airflow/tmp'
 

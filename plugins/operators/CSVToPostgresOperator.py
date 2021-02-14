@@ -5,6 +5,17 @@ from airflow.utils.decorators import apply_defaults
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
 class CSVToPostgresOperator(BaseOperator):
+    """
+        Description: Custom operator that derives from BaseOperator.
+                     This Operator loads data from a csv-file and writes it to postgres.
+
+        Arguments:
+            BaseOperator: Base class for all operators
+
+        Returns:
+            None
+    """
+
     ui_color = '#358140'
 
     copy_sql = """
@@ -38,11 +49,12 @@ class CSVToPostgresOperator(BaseOperator):
 
     def execute(self, context):
         """
-        Description: 
+        Description: This execution function loads data from a
+                     csv-file and writes it to postgres.
 
         Arguments:
-            self: 
-            context: 
+            self: Instance of the class
+            context: Context dictionary
 
         Returns:
             None

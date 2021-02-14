@@ -6,6 +6,17 @@ from airflow.models.baseoperator import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
 class DownloadCSVOperator(BaseOperator):
+    """
+        Description: Custom operator that derives from BaseOperator.
+                     This Operator downloads csv-files.
+
+        Arguments:
+            BaseOperator: Base class for all operators
+
+        Returns:
+            None
+    """
+
     ui_color = '#03e8fc'
 
 
@@ -24,11 +35,12 @@ class DownloadCSVOperator(BaseOperator):
 
     def execute(self, context):
         """
-        Description: 
+        Description: This execution function downloads a csv-file from a
+                     given path and writes it to a local path.
 
         Arguments:
-            self: 
-            context: 
+            self: Instance of the class
+            context: Context dictionary
 
         Returns:
             None

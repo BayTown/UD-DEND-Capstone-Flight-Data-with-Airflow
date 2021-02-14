@@ -8,6 +8,17 @@ from airflow.models.baseoperator import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
 class GetAirportsOperator(BaseOperator):
+    """
+        Description: Custom operator that derives from BaseOperator.
+                     This Operator gets airport data form an api and writes it to csv.
+
+        Arguments:
+            BaseOperator: Base class for all operators
+
+        Returns:
+            None
+    """
+
     ui_color = '#03e8fc'
 
 
@@ -24,11 +35,12 @@ class GetAirportsOperator(BaseOperator):
 
     def execute(self, context):
         """
-        Description: 
+        Description: This execution function loads the airports from the traffic api
+                     and writes it to csv
 
         Arguments:
-            self: 
-            context: 
+            self: Instance of the class
+            context: Context dictionary
 
         Returns:
             None

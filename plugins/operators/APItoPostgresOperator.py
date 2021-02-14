@@ -10,6 +10,19 @@ from airflow.hooks.base import BaseHook
 
 
 class APItoPostgresOperator(BaseOperator):
+    """
+        Description: Custom operator that derives from BaseOperator.
+                     This Operator is specific customized Operator
+                     to get flight data from the OpenSky REST API
+                     hour per hour and writes this data to postgres.
+
+        Arguments:
+            BaseOperator: Base class for all operators
+
+        Returns:
+            None
+    """
+
     ui_color = '#358140'
 
     insert_sql = """
@@ -42,21 +55,22 @@ class APItoPostgresOperator(BaseOperator):
 
     def execute(self, context):
         """
-        Description: 
+        Description: This execution function gets flight data from the OpenSky REST API
+                     hour per hour and writes this data to postgres.
 
         Arguments:
-            self: 
-            context: 
+            self: Instance of the class
+            context: Context dictionary
 
         Returns:
             None
         """
 
+        # Build connections
         postgres = PostgresHook(postgres_conn_id=self.postgres_conn_id)
         api_connection = BaseHook.get_connection(conn_id=self.api_conn_id)
 
         # Build correct timestamps in unix-format for passing to the api query
-        # 2021-02-07T10:00:00+00:00
         self.log.info('api_query_dateeee: {}'.format(self.api_query_date.format(**context)))
         start_time = datetime.fromisoformat(self.api_query_date.format(**context))
         end_time = start_time + timedelta(hours=1)
