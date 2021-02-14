@@ -74,19 +74,20 @@ And I extracted the following data from the Python traffic API:
 > <cite>Xavier Olive</cite>  
 
 
+## ETL pipeline
+Document the steps of the process.
+Propose how often the data should be updated and why.
+
 ## Database schema
 The purpose of the final data model is made explicit.
 A data dictionary for the final data model is included.
 
-## ETL pipeline
-Document the steps of the process.
-    Propose how often the data should be updated and why.
 
 ## Conclusion
 
 
     
-## scenarios
+## Scenarios
     Include a description of how you would approach the problem differently under the following scenarios:
         If the data was increased by 100x.
         If the pipelines were run on a daily basis by 7am.
