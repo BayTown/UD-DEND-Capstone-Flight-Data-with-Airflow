@@ -51,23 +51,23 @@ stage_aircraft_types_task = CSVToPostgresOperator(
     additional_params='CSV HEADER'
 )
 
-download_manufacturers_task = DownloadCSVOperator(
-    task_id='download_manufacturers',
-    dag=dag,
-    csv_url='https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv',
-    csv_file_name='Manufacturers.csv',
-    tmp_path=temp_path
-)
+# download_manufacturers_task = DownloadCSVOperator(
+#     task_id='download_manufacturers',
+#     dag=dag,
+#     csv_url='https://opensky-network.org/datasets/metadata/doc8643Manufacturers.csv',
+#     csv_file_name='Manufacturers.csv',
+#     tmp_path=temp_path
+# )
 
-stage_manufacturers_task = CSVToPostgresOperator(
-    task_id='stage_manufacturers',
-    dag=dag,
-    postgres_conn_id='postgres',
-    table='staging_manufacturers',
-    path_to_csv=os.path.join(temp_path, 'Manufacturers.csv'),
-    delimiter=',',
-    additional_params='CSV HEADER'
-)
+# stage_manufacturers_task = CSVToPostgresOperator(
+#     task_id='stage_manufacturers',
+#     dag=dag,
+#     postgres_conn_id='postgres',
+#     table='staging_manufacturers',
+#     path_to_csv=os.path.join(temp_path, 'Manufacturers.csv'),
+#     delimiter=',',
+#     additional_params='CSV HEADER'
+# )
 
 download_aircraft_database_task = DownloadCSVOperator(
     task_id='download_aircraft_database',
@@ -108,14 +108,14 @@ stage_airports_task = CSVToPostgresOperator(
 end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
 
 start_operator >> download_aircraft_types_task
-start_operator >> download_manufacturers_task
+#start_operator >> download_manufacturers_task
 start_operator >> download_aircraft_database_task
 start_operator >> get_airports_task
 download_aircraft_types_task >> stage_aircraft_types_task
-download_manufacturers_task >> stage_manufacturers_task
+#download_manufacturers_task >> stage_manufacturers_task
 download_aircraft_database_task >> stage_aircraft_database_task
 get_airports_task >> stage_airports_task
 stage_aircraft_types_task >> end_operator
-stage_manufacturers_task >> end_operator
+#stage_manufacturers_task >> end_operator
 stage_aircraft_database_task >> end_operator
 stage_airports_task >> end_operator

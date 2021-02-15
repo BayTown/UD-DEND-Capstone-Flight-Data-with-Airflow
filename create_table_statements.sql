@@ -9,11 +9,6 @@ CREATE TABLE staging_aircraft_types(
     wtc varchar(256)
 );
 
-CREATE TABLE staging_manufacturers(
-    code varchar(256),
-    name varchar(256)
-);
-
 CREATE TABLE staging_aircraft_database(
     icao24 varchar(256),
     registration varchar(256),
@@ -64,3 +59,21 @@ CREATE TABLE staging_flights(
     estArrivalAirport varchar(256),
     callsign varchar(256)
 );
+
+
+CREATE TABLE dim_aircrafts(
+    icao24 varchar(256) PRIMARY KEY,
+    registration varchar(256),
+    operator varchar(256),
+    operatoricao varchar(256),
+    owner varchar(256),
+    manufacturericao varchar(256),
+    manufacturername varchar(256),
+    typecode varchar(256),
+    model varchar(256),
+    serialnumber varchar(256),
+    aircraftdescription varchar(256),
+    wtc varchar(1),
+    enginetype varchar(256),
+    enginecount integer
+)

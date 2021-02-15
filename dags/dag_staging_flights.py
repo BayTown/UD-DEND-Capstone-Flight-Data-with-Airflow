@@ -17,9 +17,6 @@ to get flight data from OpenSky REST API.
 """
 
 
-
-
-
 default_args = {
     'owner': 'ah',
     'depends_on_past': False,

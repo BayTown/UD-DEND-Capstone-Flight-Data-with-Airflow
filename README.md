@@ -37,7 +37,7 @@ In this project I will use Apache Airflow to cyclically extract the data from th
 
 ## Requirements
 
-This project was done on a Linux-OS (Ubuntu 20.04 LTS) with the source-code editor Visual Studio Code.
+This project was done on a Linux-OS ([Ubuntu 20.04 LTS](https://ubuntu.com/download/desktop)) with the source-code editor [Visual Studio Code](https://code.visualstudio.com/).
 
 To implement the project you will need the following things:
 
@@ -55,10 +55,10 @@ To implement the project you will need the following things:
 I extracted the following data from the OpenSky Network:
 - aircraftDatabase (CSV-Format)
 - aircraftTypes (CSV-Format)
-- manufacturers  (CSV-Format)  
 You can find them [here](https://opensky-network.org/datasets/metadata/)
 - Flight Data (REST API)  
-A documentation about this you can find [here](https://opensky-network.org/apidoc/rest.html#id6)
+The problem that there is currently still is that there are often no entries at the departure airport and the arrival airport, since these data on the flight position values ​​are only estimated and. However, this deficiency did not prevent me from doing this project, because I want to show what is possible with open source data.  
+A documentation about this flight data you can find [here](https://opensky-network.org/apidoc/rest.html#id6)
 
 
 > The OpenSky Network, http://www.opensky-network.org  
@@ -77,6 +77,9 @@ And I extracted the following data from the Python traffic API:
 ## ETL pipeline
 Document the steps of the process.
 Propose how often the data should be updated and why.
+
+### Data Quality Checks
+staging_aircraft_database.icao24
 
 ## Database schema
 The purpose of the final data model is made explicit.
