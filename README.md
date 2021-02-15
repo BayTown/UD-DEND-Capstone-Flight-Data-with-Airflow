@@ -75,16 +75,16 @@ And I extracted the following data from the Python traffic API:
 
 
 ## ETL pipeline
-Document the steps of the process.
-Propose how often the data should be updated and why.
+    Document the steps of the process.
+    Propose how often the data should be updated and why.
 
 ### Data Quality Checks
-staging_aircraft_database.icao24
+    staging_aircraft_database.icao24
 
 ## Database schema
-The purpose of the final data model is made explicit.
-A data dictionary for the final data model is included.
-
+    The purpose of the final data model is made explicit.
+    A data dictionary for the final data model is included.
+### Data dictionary of the final data model
 
 ## Conclusion
 
