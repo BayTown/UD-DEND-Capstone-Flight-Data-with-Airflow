@@ -54,7 +54,7 @@ To implement the project you will need the following things:
 
 I extracted the following data from the OpenSky Network:
 - aircraftDatabase (CSV-Format)
-- aircraftTypes (CSV-Format)
+- aircraftTypes (CSV-Format)  
 You can find them [here](https://opensky-network.org/datasets/metadata/)
 - Flight Data (REST API)  
 The problem that there is currently still is that there are often no entries at the departure airport and the arrival airport, since these data on the flight position values ​​are only estimated and. However, this deficiency did not prevent me from doing this project, because I want to show what is possible with open source data.  
@@ -86,12 +86,11 @@ And I extracted the following data from the Python traffic API:
     A data dictionary for the final data model is included.
 ### Data dictionary of the final data model
 
-## Conclusion
-
-
     
 ## Scenarios
     Include a description of how you would approach the problem differently under the following scenarios:
         If the data was increased by 100x.
         If the pipelines were run on a daily basis by 7am.
         If the database needed to be accessed by 100+ people.
+
+## Conclusion
