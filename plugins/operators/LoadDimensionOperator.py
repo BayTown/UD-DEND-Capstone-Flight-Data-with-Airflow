@@ -21,6 +21,11 @@ class LoadDimensionOperator(BaseOperator):
 
     ui_color = '#80BD9E'
     
+    insert_sql = """
+        INSERT INTO {} 
+        {};
+    """
+
     truncate_sql = """
         DELETE FROM {};
     """
@@ -57,12 +62,12 @@ class LoadDimensionOperator(BaseOperator):
         
         # If parameter truncate_table is true, then truncate given table
         if self.truncate_table:
-            self.log.info('Clearing data from dimension Redshift table {}'.format(self.table))
+            self.log.info('Truncate data from dimension table {}'.format(self.table))
             trunc_formatted_sql = LoadDimensionOperator.truncate_sql.format(self.table)
-            redshift.run(trunc_formatted_sql)
+            postgres.run(trunc_formatted_sql)
         
         # Realize insert statement to fill dimension table
         formatted_sql = LoadDimensionOperator.insert_sql.format(self.table, self.insert_sql_query)
-        redshift.run(formatted_sql)
+        postgres.run(formatted_sql)
 
-        self.log.info('LoadDimensionOperator for {} completed'.format(self.table))
+        self.log.info('LoadDimensionOperator for dimension table {} completed'.format(self.table))
