@@ -28,7 +28,7 @@ default_args = {
 }
 
 
-dag = DAG("aa_dag_staging_flights", default_args=default_args, schedule_interval='@hourly', max_active_runs=1)
+dag = DAG("dag_etl_flight_data", default_args=default_args, schedule_interval='@hourly', max_active_runs=1)
 
 start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 

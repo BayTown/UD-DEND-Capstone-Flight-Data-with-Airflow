@@ -8,6 +8,7 @@ from airflow.providers.postgres.operators.postgres import Mapping, PostgresOpera
 from operators.CSVToPostgresOperator import CSVToPostgresOperator
 from operators.DownloadCSVOperator import DownloadCSVOperator
 from operators.GetAirportsOperator import GetAirportsOperator
+from operators.DataQualityOperator import DataQualityOperator
 from airflow.operators.python import PythonOperator
 
 """
@@ -25,10 +26,10 @@ default_args = {
     'owner': 'ah',
     'start_date': datetime.utcnow(),
     'retries': 1,
-    'retry_delay': timedelta(minutes=5)
+    'retry_delay': timedelta(minutes=2)
 }
 
-dag = DAG("aa_staging_aircraft_dbs", default_args=default_args)
+dag = DAG("dag_etl_aircraft_data", default_args=default_args)
 
 start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 
@@ -85,6 +86,17 @@ stage_airports_task = CSVToPostgresOperator(
     additional_params='CSV HEADER'
 )
 
+run_quality_checks_task = DataQualityOperator(
+    task_id='Run_data_quality_checks',
+    dag=dag,
+    postgres_conn_id='postgres',
+    data_quality_checks=[
+        {'sql_query': 'SELECT COUNT(*) FROM staging_aircraft_types WHERE designator IS NULL', 'expected_result': 0},
+        {'sql_query': 'SELECT COUNT(*) FROM staging_aircraft_database WHERE icao24 IS NULL', 'expected_result': 0},
+        {'sql_query': 'SELECT COUNT(*) FROM staging_airports WHERE icao IS NULL', 'expected_result': 0}
+    ]
+)
+
 
 end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
 
@@ -94,6 +106,7 @@ start_operator >> get_airports_task
 download_aircraft_types_task >> stage_aircraft_types_task
 download_aircraft_database_task >> stage_aircraft_database_task
 get_airports_task >> stage_airports_task
-stage_aircraft_types_task >> end_operator
-stage_aircraft_database_task >> end_operator
-stage_airports_task >> end_operator
+stage_aircraft_types_task >> run_quality_checks_task
+stage_aircraft_database_task >> run_quality_checks_task
+stage_airports_task >> run_quality_checks_task
+run_quality_checks_task >> end_operator

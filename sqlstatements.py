@@ -29,4 +29,6 @@ aircraft_data_insert = ("""INSERT INTO dim_aircrafts (icao24,
                            FROM staging_aircraft_database AS sad 
                            LEFT JOIN staging_aircraft_types AS sat 
                            ON sad.typecode=sat.designator
+                           ON CONFLICT (sad.icao24)
+                           DO NOTHING
 ;""")
