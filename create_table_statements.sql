@@ -73,7 +73,7 @@ CREATE TABLE dim_aircrafts(
     model               VARCHAR(256),
     serialnumber        VARCHAR(256),
     aircraftdescription VARCHAR(256),
-    wtc                 VARCHAR(1),
+    wtc                 VARCHAR(256),
     enginetype          VARCHAR(256),
     enginecount         INT
 );

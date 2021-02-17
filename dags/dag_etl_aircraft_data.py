@@ -9,7 +9,10 @@ from operators.CSVToPostgresOperator import CSVToPostgresOperator
 from operators.DownloadCSVOperator import DownloadCSVOperator
 from operators.GetAirportsOperator import GetAirportsOperator
 from operators.DataQualityOperator import DataQualityOperator
+from operators.LoadDimensionOperator import LoadDimensionOperator
 from airflow.operators.python import PythonOperator
+
+from helpers.sqlstatements import SqlQueries
 
 """
 Description:
@@ -87,7 +90,7 @@ stage_airports_task = CSVToPostgresOperator(
 )
 
 run_quality_checks_task = DataQualityOperator(
-    task_id='Run_data_quality_checks',
+    task_id='run_data_quality_checks',
     dag=dag,
     postgres_conn_id='postgres',
     data_quality_checks=[
@@ -97,8 +100,17 @@ run_quality_checks_task = DataQualityOperator(
     ]
 )
 
+load_aircraft_dimension_table_task = LoadDimensionOperator(
+    task_id='load_aircraft_dimension_table',
+    dag=dag,
+    postgres_conn_id='postgres',
+    table='dim_aircrafts',
+    insert_sql_query=SqlQueries.aircraft_data_insert,
+    truncate_table=True
+)
 
 end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
+
 
 start_operator >> download_aircraft_types_task
 start_operator >> download_aircraft_database_task
@@ -109,4 +121,5 @@ get_airports_task >> stage_airports_task
 stage_aircraft_types_task >> run_quality_checks_task
 stage_aircraft_database_task >> run_quality_checks_task
 stage_airports_task >> run_quality_checks_task
-run_quality_checks_task >> end_operator
+run_quality_checks_task >> load_aircraft_dimension_table_task
+load_aircraft_dimension_table_task >> end_operator

@@ -16,7 +16,7 @@ class CSVToPostgresOperator(BaseOperator):
             None
     """
 
-    ui_color = '#358140'
+    ui_color = '#beff33'
 
     copy_sql = """
         COPY {}
