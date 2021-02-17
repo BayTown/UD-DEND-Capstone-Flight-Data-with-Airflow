@@ -78,8 +78,14 @@ And I extracted the following data from the Python traffic API:
     Document the steps of the process.
     Propose how often the data should be updated and why.
 
+### Overview of the DAGs
+
 ### Data Quality Checks
-    staging_aircraft_database.icao24
+The following data quality checks are carried out:
+- In the table `staging_aircraft_types`, the column `designator` is checked for NULL values
+- In the table `staging_aircraft_database`, the column `icao24` is checked for NULL values
+- In the table `staging_airports, the column`, the column `icao` is checked for NULL values
+
 
 ## Database schema
     The purpose of the final data model is made explicit.
