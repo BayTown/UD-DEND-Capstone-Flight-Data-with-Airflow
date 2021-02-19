@@ -4,6 +4,7 @@ from operators.GetAirportsOperator import GetAirportsOperator
 from operators.APItoPostgresOperator import APItoPostgresOperator
 from operators.DataQualityOperator import DataQualityOperator
 from operators.LoadDimensionOperator import LoadDimensionOperator
+from operators.LoadFactOperator import LoadFactOperator
 
 __all__ = [
     'CSVToPostgresOperator',
@@ -11,5 +12,6 @@ __all__ = [
     'GetAirportsOperator',
     'APItoPostgresOperator',
     'DataQualityOperator',
-    'LoadDimensionOperator'
+    'LoadDimensionOperator',
+    'LoadFactOperator'
 ]

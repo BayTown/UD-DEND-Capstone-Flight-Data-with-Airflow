@@ -11,5 +11,6 @@ class FlightData(AirflowPlugin):
         operators.GetAirportsOperator,
         operators.APItoPostgresOperator,
         operators.DataQualityOperator,
-        operators.LoadDimensionOperator
+        operators.LoadDimensionOperator,
+        operators.LoadFactOperator
     ]

@@ -84,7 +84,8 @@ And I extracted the following data from the Python traffic API:
 The following data quality checks are carried out:
 - In the table `staging_aircraft_types`, the column `designator` is checked for NULL values
 - In the table `staging_aircraft_database`, the column `icao24` is checked for NULL values
-- In the table `staging_airports, the column`, the column `icao` is checked for NULL values
+- In the table `staging_airports`, the column `icao` is checked for NULL values
+- In the table `staging_flights`, the column `icao24` is checked for NULL values
 
 
 ## Database schema

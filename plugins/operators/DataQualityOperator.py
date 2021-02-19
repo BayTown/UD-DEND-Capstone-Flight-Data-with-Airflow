@@ -64,6 +64,8 @@ class DataQualityOperator(BaseOperator):
 
                 if num_records != expected_result:
                     raise ValueError('Data quality check failed. {} entries excpected. {} given'.format(expected_result, num_records))
+                else:
+                    self.log.info('Data Check passed for query - {}. Result: {}'.format(sql_query, num_records))
                     
             except ValueError as v:
                 self.log.info(v.args)

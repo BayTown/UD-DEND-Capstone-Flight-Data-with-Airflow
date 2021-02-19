@@ -60,7 +60,6 @@ CREATE TABLE staging_flights(
     callsign            VARCHAR(256)
 );
 
-
 CREATE TABLE dim_aircrafts(
     icao24              VARCHAR(256) PRIMARY KEY,
     registration        VARCHAR(256),
@@ -86,4 +85,14 @@ CREATE TABLE dim_time (
     month        INT         NOT NULL,
     year         INT         NOT NULL,
     weekday      INT         NOT NULL
+);
+
+CREATE TABLE fact_flights(
+    flights_id          SERIAL          PRIMARY KEY,
+    icao24              VARCHAR(256)    NOT NULL,
+    firstSeenTime       TIMESTAMP,
+    estDepartureAirport VARCHAR(256),
+    lastSeenTime        TIMESTAMP,
+    estArrivalAirport   VARCHAR(256),
+    callsign            VARCHAR(256)
 );
