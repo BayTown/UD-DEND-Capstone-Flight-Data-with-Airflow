@@ -8,8 +8,6 @@
 
 ## Introduction  
 
-    What's the goal? What queries will you want to run?
-
 This project is about historical flight data. It is about extracting historical flight data (facts)
 and additional information (dimensions) from various sources, transforming them and loading them into a structured
 data warehouse in order to make this data available for data analysis.  
@@ -17,10 +15,6 @@ If the project is successfully implemented, you should be able to search through
 
 
 ## Project Description
-    
-    How would Spark or Airflow be incorporated? Why did you choose the model you chose?
-    Clearly state the rationale for the choice of tools and technologies for the project.
-    The choice of tools, technologies are justified well.
 
 In this project I extracted the required data from two different data sources (OpenSky Network and Python traffic API), then put them into a meaningful context using transform and then finally loaded the data into a database in the form of fact and dimension tables.  
 When it comes to data sources, the OpenSource and OpenData concept was very important to me, as I believe that this will be the driver for our future world. Even if, as I will explain below, I had to accept a few flaws.  
@@ -46,11 +40,6 @@ To implement the project you will need the following things:
 - [PostgreSQL](https://www.postgresql.org/) Version 12.5
 
 ## Project Datasets - Data Sources
-    The project includes:
-
-    At least 2 data sources
-    More than 1 million lines of data.
-    At least two data sources/formats (csv, api, json)
 
 I extracted the following data from the OpenSky Network:
 - aircraftDatabase (CSV-Format)

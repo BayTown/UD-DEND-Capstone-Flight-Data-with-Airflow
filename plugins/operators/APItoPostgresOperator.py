@@ -44,6 +44,7 @@ class APItoPostgresOperator(BaseOperator):
                  api_path='',
                  api_conn_id='',
                  api_query_date='',
+                 truncate_table=False,
                  *args, **kwargs):
 
         super(APItoPostgresOperator, self).__init__(*args, **kwargs)
@@ -52,6 +53,7 @@ class APItoPostgresOperator(BaseOperator):
         self.api_path = api_path
         self.api_conn_id = api_conn_id
         self.api_query_date = api_query_date
+        self.truncate_table=truncate_table
 
     def execute(self, context):
         """
@@ -82,10 +84,11 @@ class APItoPostgresOperator(BaseOperator):
         complete_api_path = self.api_path.format(api_connection.login, api_connection.password, start_timestamp, end_timestamp)
         self.log.info('api_path: {}'.format(complete_api_path))
 
-        # Truncate table
-        #self.log.info('Clearing data from Postgres staging table {}'.format(self.table))
-        #trunc_formatted_sql = APItoPostgresOperator.truncate_sql.format(self.table)
-        #postgres.run(trunc_formatted_sql)
+        # If parameter truncate_table is true, then truncate given table
+        if self.truncate_table:
+            self.log.info('Truncate data from staging table {}'.format(self.table))
+            trunc_formatted_sql = APItoPostgresOperator.truncate_sql.format(self.table)
+            postgres.run(trunc_formatted_sql)
 
         # Get data from api
         try:

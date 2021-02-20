@@ -9,7 +9,7 @@ class LoadFactOperator(BaseOperator):
     """
         Description: Custom operator that derives from BaseOperator.
                      This Operator is specific customized Operator
-                     to fill a given dimension table with a passed
+                     to fill a given fact table with a passed
                      SQL statement.
 
         Arguments:
@@ -40,7 +40,7 @@ class LoadFactOperator(BaseOperator):
 
     def execute(self, context):
         """
-        Description: This custom function fills a given dimension table with a passed
+        Description: This custom function fills a given fact table with a passed
                      SQL statement.
 
         Arguments:
