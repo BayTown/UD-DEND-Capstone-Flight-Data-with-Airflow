@@ -175,7 +175,7 @@ This table contains all flights with the most relevant values:
 - What to do if the data was increased by 100x:  
   If the data were to be increased by 100 times, one should think about a distributed database in a cloud such as AWS Redshift, since Redshift is highly scalable and is designed for large amounts of data. High query speeds are also possible there thanks to the physical distribution of resources over a cluster structure and the parallelization of processing.
 - What to do if the pipelines were run on a daily basis by 7am:  
-  Then the parameter 'schedule_interval' should be adjusted accordingly in the DAG configuration.
+  Then the parameter `schedule_interval` should be adjusted accordingly in the DAG configuration.
 - What to do if the database needed to be accessed by 100+ people:  
   Then you should think about a front end to increase user-friendliness. For this purpose, a user and role concept should also be implemented.
 
