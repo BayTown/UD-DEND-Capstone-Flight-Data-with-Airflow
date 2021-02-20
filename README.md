@@ -73,10 +73,18 @@ Here you can see an architecture diagram of the ETL pipeline:
 There are two DAGs that implement the ETL pipeline for this project. I want to explain these in more detail here:
 - dag_etl_aircraft_data  
   This DAG implements the extract of the csv files `aircraftDatabase.csv` and` AircraftTypes.csv` and the airport data via the traffic API and loads them into the respective staging tables. Then these are transferred and loaded into the dimension table 'dim_aircrafts'.  
-  I have chosen once a week as the cycle for this DAG because that type of master data is completely sufficient for this.
+  I have chosen once a week `@weekly` as the cycle for this DAG because that type of master data is completely sufficient for this.
+  ![graph_view_dag_etl_aricraft_data](https://user-images.githubusercontent.com/32474126/108608289-56af9b00-73c6-11eb-84c7-d071fad0ea88.png)
 
+- dag_etl_flight_data  
+  In this DAG the flight data of the OpenSky Network REST API are retrieved. The connection string is as follows:  
+  `'https://{USERNAME}:{PASSWORD}@opensky-network.org/api/flights/all?begin={UNIXTIMESTAMP Start of the time interval}&end={UNIXTIMESTAMP End of the time interval}'`  
+  A documentation about this you can find [here](https://opensky-network.org/apidoc/rest.html#flights-in-time-interval)  
+  For this purpose, the DAG transfers the `execution_date` to the `APIToPostgresOperator`, which converts the datetime timestamp into a UNIX timestamp. This represents the starttime `begin`. An hour is added to the endtime. This means that for each query or each execution of the DAG, one hour is queried as a period to the API.  
+  Therefore the cycle for this DAG is one hour `@hourly`.
+  As part of this project, all flight data between 01.01.2018 and 10.02.2021 were requested. That is 1136 days or 27264 hours and thus 27264 requests to the API.
+  ![graph_view_dag_etl_flight_data](https://user-images.githubusercontent.com/32474126/108608300-6b8c2e80-73c6-11eb-8592-b1b0af6b64fb.png)
 
-### Overview of the DAGs
 
 ### Data Quality Checks
 The following data quality checks are carried out:
