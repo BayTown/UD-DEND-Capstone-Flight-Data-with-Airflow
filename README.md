@@ -99,7 +99,15 @@ The following data quality checks are carried out:
 Here you can take a view of the final data model:  
 ![ERD_final_data_model](https://user-images.githubusercontent.com/32474126/108609629-78615000-73cf-11eb-91d7-9ad2363420b2.png)
 
-
+Amounts of data entries (21.01.2021):  
+| Table         | Entries    |
+|---------------|------------|
+| dim_aircrafts | 460,000    |
+| dim_time      | 29,161,422 |
+| dim_airports  | 62,301     |
+| fact_flights  | 18,363,826 |
+  
+  
 ### Data dictionary of the final data model
   
 #### Table dim_aircrafts  
@@ -160,10 +168,16 @@ This table contains all flights with the most relevant values:
 | lastSeenTime        | DATETIME | Estimated time of arrival for the flight as Unix time (seconds since epoch)           | 2018-06-24 06:55:58              |
 | estArrivalAirport   | TEXT     | ICAO code of the estimated arrival airport                                            | LIDU                             |
 | callsign            | TEXT     | Callsign of the aircraft                                                              | DLA3SM                           |
-## Scenarios
-    Include a description of how you would approach the problem differently under the following scenarios:
-        If the data was increased by 100x.
-        If the pipelines were run on a daily basis by 7am.
-        If the database needed to be accessed by 100+ people.
+
+
+## Imagined scenarios
+
+- What to do if the data was increased by 100x:
+  If the data were to be increased by 100 times, one should think about a distributed database in a cloud such as AWS Redshift, since Redshift is highly scalable and is designed for large amounts of data. High query speeds are also possible there thanks to the physical distribution of resources over a cluster structure and the parallelization of processing.
+- What to do if the pipelines were run on a daily basis by 7am:
+  Then the parameter 'schedule_interval' should be adjusted accordingly in the DAG configuration.
+- What to do if the database needed to be accessed by 100+ people:
+  Then you should think about a front end to increase user-friendliness. For this purpose, a user and role concept should also be implemented.
 
 ## Conclusion
+I found the project very interesting and I had a lot of fun. Since I find the aircraft world very exciting, I decided to create a data set about historical flights by querying various sources. At the beginning of the project, I started looking for suitable sources with the focus on open source and open data, as I mentioned at the beginning of this README. Fortunately, I found what I was looking for, even if not all the data available are complete. Then I set about implementing an ETL pipeline with Apache Airflow to extract the data, transfer it and load it into the database, in this case PostgreSQL. Data quality checks were also carried out. Thus the necessary data is now in dimension tables and fact tables to be able to execute queries. I wish everyone who wants to use this repository as the basis for their own project a lot of fun!
