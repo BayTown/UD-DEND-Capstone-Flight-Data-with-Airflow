@@ -78,7 +78,7 @@ CREATE TABLE dim_aircrafts(
 );
 
 CREATE TABLE dim_time (
-    seen_time   TIMESTAMP   NOT NULL   PRIMARY KEY,
+    seen_time   TIMESTAMP    NOT NULL   PRIMARY KEY,
     hour         INT         NOT NULL,
     day          INT         NOT NULL,
     week         INT         NOT NULL,
@@ -87,8 +87,20 @@ CREATE TABLE dim_time (
     weekday      INT         NOT NULL
 );
 
+CREATE TABLE dim_airports (
+    icao            VARCHAR(256)    NOT NULL   PRIMARY KEY,
+    name            VARCHAR(256),
+    iata            VARCHAR(256),
+    latitude        NUMERIC(18,0),
+    longitude       NUMERIC(18,0),
+    country         VARCHAR(256),
+    altitude        NUMERIC(18,0),
+    type            VARCHAR(256),
+    municipality    VARCHAR(256)
+);
+
 CREATE TABLE fact_flights(
-    flight_id          varchar(32)     NOT NULL    PRIMARY KEY,
+    flight_id           VARCHAR(32)     NOT NULL    PRIMARY KEY,
     icao24              VARCHAR(256)    NOT NULL,
     firstSeenTime       TIMESTAMP,
     estDepartureAirport VARCHAR(256),

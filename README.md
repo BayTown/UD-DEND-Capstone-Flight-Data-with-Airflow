@@ -31,7 +31,7 @@ In this project I will use Apache Airflow to cyclically extract the data from th
 
 ## Requirements
 
-This project was done on a Linux-OS ([Ubuntu 20.04 LTS](https://ubuntu.com/download/desktop)) with the source-code editor [Visual Studio Code](https://code.visualstudio.com/).
+This project was done on a Linux-OS ([Ubuntu 20.04 LTS](https://ubuntu.com/download/desktop)) with the awesome open source code editor [Visual Studio Code](https://code.visualstudio.com/).
 
 To implement the project you will need the following things:
 
@@ -39,7 +39,8 @@ To implement the project you will need the following things:
 - [Apache Airflow](https://airflow.apache.org/) Version 2.0.0
 - [PostgreSQL](https://www.postgresql.org/) Version 12.5
 
-After you have installed Apache Airflow you have to create the connections for the OpenSky Network and for the Postgres database under Admin-> Connections. In my project these are implemented as the connection IDs `postgres` and `openskynetwork`.
+After you have installed Apache Airflow you have to create the connections for the OpenSky Network and for the Postgres database under Admin-> Connections. In my project these are implemented as the connection IDs `postgres` and `openskynetwork`.  
+Also you have to create all the tables via the CREATE statements which are in the file `create_table_statements.sql`.
 
 ## Project Datasets - Data Sources
 
@@ -72,9 +73,9 @@ Here you can see an architecture diagram of the ETL pipeline:
 
 There are two DAGs that implement the ETL pipeline for this project. I want to explain these in more detail here:
 - dag_etl_aircraft_data  
-  This DAG implements the extract of the csv files `aircraftDatabase.csv` and` AircraftTypes.csv` and the airport data via the traffic API and loads them into the respective staging tables. Then these are transferred and loaded into the dimension table 'dim_aircrafts'.  
+  This DAG implements the extract of the csv files `aircraftDatabase.csv` and` AircraftTypes.csv` and the airport data via the traffic API and loads them into the respective staging tables. Then these are transferred and loaded into the dimension tables `dim_aircrafts` and `dim_airports`.  
   I have chosen once a week `@weekly` as the cycle for this DAG because that type of master data is completely sufficient for this.
-  ![graph_view_dag_etl_aricraft_data](https://user-images.githubusercontent.com/32474126/108608289-56af9b00-73c6-11eb-84c7-d071fad0ea88.png)
+  ![graph_view_dag_etl_aricraft_data](https://user-images.githubusercontent.com/32474126/108609066-b197c100-73cb-11eb-836a-4b83b4dcfa99.png)
 
 - dag_etl_flight_data  
   In this DAG the flight data of the OpenSky Network REST API are retrieved. The connection string is as follows:  
@@ -95,8 +96,14 @@ The following data quality checks are carried out:
 
 
 ## Database schema
-    The purpose of the final data model is made explicit.
-    A data dictionary for the final data model is included.
+Here you can take a view of the final data model:  
+![ERD_final_data_model](https://user-images.githubusercontent.com/32474126/108609629-78615000-73cf-11eb-91d7-9ad2363420b2.png)
+
+
+
+A data dictionary for the final data model is included.
+
+
 ### Data dictionary of the final data model
 
     

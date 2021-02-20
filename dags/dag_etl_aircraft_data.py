@@ -33,7 +33,7 @@ default_args = {
     'retry_delay': timedelta(minutes=2)
 }
 
-dag = DAG("dag_etl_aircraft_data", default_args=default_args, schedule_interval='@weekly', max_active_runs=1)
+dag = DAG("dag_etl_aircraft_data", default_args=default_args, schedule_interval='@weekly', max_active_runs=3)
 
 start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 
@@ -110,6 +110,15 @@ load_aircraft_dimension_table_task = LoadDimensionOperator(
     truncate_table=True
 )
 
+load_airports_dimension_table_task = LoadDimensionOperator(
+    task_id='load_airports_dimension_table',
+    dag=dag,
+    postgres_conn_id='postgres',
+    table='dim_airports',
+    insert_sql_query=SqlQueries.airports_data_insert,
+    truncate_table=True
+)
+
 end_operator = DummyOperator(task_id='Stop_execution',  dag=dag)
 
 
@@ -123,4 +132,6 @@ stage_aircraft_types_task >> run_quality_checks_task
 stage_aircraft_database_task >> run_quality_checks_task
 stage_airports_task >> run_quality_checks_task
 run_quality_checks_task >> load_aircraft_dimension_table_task
+run_quality_checks_task >> load_airports_dimension_table_task
 load_aircraft_dimension_table_task >> end_operator
+load_airports_dimension_table_task >> end_operator

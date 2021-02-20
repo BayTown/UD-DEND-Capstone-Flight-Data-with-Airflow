@@ -18,6 +18,20 @@ class SqlQueries:
                                ON sad.typecode=sat.designator
                                ON CONFLICT (icao24) DO NOTHING""")
 
+    airports_data_insert = ("""(icao, name, iata, latitude, longitude, country, altitude, type, municipality)
+                               SELECT icao, 
+                                      name,
+                                      iata, 
+                                      latitude, 
+                                      longitude, 
+                                      country, 
+                                      altitude, 
+                                      type, 
+                                      municipality 
+                               FROM staging_airports
+                               ON CONFLICT (icao) DO NOTHING
+    """)
+
     flight_data_insert = ("""(flight_id, icao24, firstSeenTime, estdepartureairport, lastSeenTime, estarrivalairport, callsign)
                               SELECT DISTINCT md5(f.icao24 || f.firstSeenTime) flight_id,
                                               f.icao24,
