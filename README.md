@@ -39,6 +39,8 @@ To implement the project you will need the following things:
 - [Apache Airflow](https://airflow.apache.org/) Version 2.0.0
 - [PostgreSQL](https://www.postgresql.org/) Version 12.5
 
+After you have installed Apache Airflow you have to create the connections for the OpenSky Network and for the Postgres database under Admin-> Connections. In my project these are implemented as the connection IDs `postgres` and `openskynetwork`.
+
 ## Project Datasets - Data Sources
 
 I extracted the following data from the OpenSky Network:
@@ -64,8 +66,15 @@ And I extracted the following data from the Python traffic API:
 
 
 ## ETL pipeline
-    Document the steps of the process.
-    Propose how often the data should be updated and why.
+
+Here you can see an architecture diagram of the ETL pipeline:  
+![ETL_Architecture](https://user-images.githubusercontent.com/32474126/108607653-eb63ca00-73c1-11eb-92ef-6ab3011a400a.png)
+
+There are two DAGs that implement the ETL pipeline for this project. I want to explain these in more detail here:
+- dag_etl_aircraft_data  
+  This DAG implements the extract of the csv files `aircraftDatabase.csv` and` AircraftTypes.csv` and the airport data via the traffic API and loads them into the respective staging tables. Then these are transferred and loaded into the dimension table 'dim_aircrafts'.  
+  I have chosen once a week as the cycle for this DAG because that type of master data is completely sufficient for this.
+
 
 ### Overview of the DAGs
 

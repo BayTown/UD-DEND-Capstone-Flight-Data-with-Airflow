@@ -27,12 +27,13 @@ temp_path = '/home/andi-ml/Documents/projects/UD-DEND-Capstone-Flight-Data-with-
 
 default_args = {
     'owner': 'ah',
-    'start_date': datetime.utcnow(),
+    'start_date': datetime(2021, 2, 15, 0, 0, 0, 0),
+    'end_date': datetime(2022, 1, 1, 0, 0, 0, 0),
     'retries': 1,
     'retry_delay': timedelta(minutes=2)
 }
 
-dag = DAG("dag_etl_aircraft_data", default_args=default_args)
+dag = DAG("dag_etl_aircraft_data", default_args=default_args, schedule_interval='@weekly', max_active_runs=1)
 
 start_operator = DummyOperator(task_id='Begin_execution',  dag=dag)
 
