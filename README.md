@@ -101,8 +101,10 @@ Here you can take a view of the final data model:
 
 
 ### Data dictionary of the final data model
+  
+#### Table dim_aircrafts  
 
-#### Table dim_aircrafts
+This table contains all aircraft with the most relevant data about the aircrafts: 
 | Attribute           | Datatype | Description                                                                                 | Example   |
 |---------------------|----------|---------------------------------------------------------------------------------------------|-----------|
 | icao24              | TEXT     | Unique ICAO 24-bit address of the transponder of the aircraft                               | 3c4a8b    |
@@ -119,15 +121,45 @@ Here you can take a view of the final data model:
 | wtc                 | TEXT     | ICAO Wake Turbulence Category (J, H, M, L)                                                  | H         |
 | enginetype          | TEXT     | Type of engines                                                                             | Jet       |
 | enginecount         | INTEGER  | Number of engines                                                                           | 4         |
-
+  
 #### Table dim_time
-
+All time stamps with the associated time units are in this table in order to enable faster queries in relation to the fact table:  
+| Attribute | Datatype | Description                      | Example             |
+|-----------|----------|----------------------------------|---------------------|
+| seen_time | DATETIME | Datetime Timestamp               | 2018-01-01 00:00:03 |
+| hour      | INTEGER  | Hour in relation to seen_time    | 0                   |
+| day       | INTEGER  | Day in relation to seen_time     | 1                   |
+| week      | INTEGER  | Week in relation to seen_time    | 1                   |
+| month     | INTEGER  | Month in relation to seen_time   | 1                   |
+| year      | INTEGER  | Year in relation to seen_time    | 2018                |
+| weekday   | INTEGER  | Weekday in relation to seen_time | 1                   |
 
 #### Table dim_airports
-
+This table contains all airports with the most important relevant data:  
+| Attribute    | Datatype | Description                            | Example        |
+|--------------|----------|----------------------------------------|----------------|
+| icao         | TEXT     | ICAO code of the airport               | EDDM           |
+| name         | TEXT     | Name of the Airport                    | Munich Airport |
+| iata         | TEXT     | IATA code of the airport               | MUC            |
+| latitude     | NUMERIC  | Geographical latitude of the airport   | 48             |
+| longitude    | NUMERIC  | Longitude of the airport geographical  | 12             |
+| country      | TEXT     | Country of the airport                 | Germany        |
+| altitude     | NUMERIC  | Altitude of the airport in feet        | 1487           |
+| type         | TEXT     | Airport size type                      | large_airport  |
+| municipality | TEXT     | Municipality of the airport            | Munich         |
 
 #### Table fact_flights
-    
+This table contains all flights with the most relevant values:
+
+| Attribute           | Datatype | Description                                                                           | Example                          |
+|---------------------|----------|---------------------------------------------------------------------------------------|----------------------------------|
+| flight_id           | TEXT     | MD5 hash formed from the values icao24 and firstSeenTime of the table staging_flights | 0000a96b470e06ffa3312b39fee2ecb2 |
+| icao24              | TEXT     | Unique ICAO 24-bit address of the transponder of the aircraft                         | 3006b5                           |
+| firstSeenTime       | DATETIME | Estimated time of departure for the flight as Unix time (seconds since epoch)         | 2018-06-24 06:19:30              |
+| estDepartureAirport | TEXT     | ICAO code of the estimated departure airport                                          | EDDM                             |
+| lastSeenTime        | DATETIME | Estimated time of arrival for the flight as Unix time (seconds since epoch)           | 2018-06-24 06:55:58              |
+| estArrivalAirport   | TEXT     | ICAO code of the estimated arrival airport                                            | LIDU                             |
+| callsign            | TEXT     | Callsign of the aircraft                                                              | DLA3SM                           |
 ## Scenarios
     Include a description of how you would approach the problem differently under the following scenarios:
         If the data was increased by 100x.
