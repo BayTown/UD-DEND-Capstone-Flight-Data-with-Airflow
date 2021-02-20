@@ -100,12 +100,33 @@ Here you can take a view of the final data model:
 ![ERD_final_data_model](https://user-images.githubusercontent.com/32474126/108609629-78615000-73cf-11eb-91d7-9ad2363420b2.png)
 
 
-
-A data dictionary for the final data model is included.
-
-
 ### Data dictionary of the final data model
 
+#### Table dim_aircrafts
+| Attribute           | Datatype | Description                                                                                 | Example   |
+|---------------------|----------|---------------------------------------------------------------------------------------------|-----------|
+| icao24              | TEXT     | Unique ICAO 24-bit address of the transponder of the aircraft                               | 3c4a8b    |
+| registration        | TEXT     | Aircraft registration code, alternatively called tail number                                | D-ABTK    |
+| operator            | TEXT     | Operator of the aircraft                                                                    | Lufthansa |
+| operatoricao        | TEXT     | The ICAO airline designator is a code assigned by the (ICAO) to aircraft operating agencies | DLH       |
+| owner               | TEXT     | Owner of the aircraft                                                                       | Lufthansa |
+| manufacturericao    | TEXT     | ICAO manufacturer designator                                                                | BOEING    |
+| manufacturername    | TEXT     | Name of the aircraft manufacturer                                                           | Boeing    |
+| typecode            | TEXT     | Short type code of the aircraft model                                                       | B744      |
+| model               | TEXT     | Aircraft model                                                                              | 747 430   |
+| serialnumber        | TEXT     | Aircraft serial number                                                                      | 29871     |
+| aircraftdescription | TEXT     | Parent aircraft type                                                                        | LandPlane |
+| wtc                 | TEXT     | ICAO Wake Turbulence Category (J, H, M, L)                                                  | H         |
+| enginetype          | TEXT     | Type of engines                                                                             | Jet       |
+| enginecount         | INTEGER  | Number of engines                                                                           | 4         |
+
+#### Table dim_time
+
+
+#### Table dim_airports
+
+
+#### Table fact_flights
     
 ## Scenarios
     Include a description of how you would approach the problem differently under the following scenarios:
