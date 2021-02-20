@@ -99,7 +99,7 @@ The following data quality checks are carried out:
 Here you can take a view of the final data model:  
 ![ERD_final_data_model](https://user-images.githubusercontent.com/32474126/108609629-78615000-73cf-11eb-91d7-9ad2363420b2.png)
 
-Amounts of data entries (21.01.2021):  
+Amounts of data entries (21.02.2021):  
 | Table         | Entries    |
 |---------------|------------|
 | dim_aircrafts | 460,000    |
